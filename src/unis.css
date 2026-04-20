@@ -1,5 +1,6 @@
+
 /* =======================
-   GLOBAL
+   BASE
 ======================= */
 * {
   margin: 0;
@@ -8,149 +9,145 @@
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
-  min-height: 100vh;
-  color: white;
-
-  /* Fondo animado tipo UTZAC moderno */
-  background: linear-gradient(-45deg, #0f172a, #111827, #064e3b, #022c22);
-  background-size: 400% 400%;
-  animation: gradientBG 12s ease infinite;
-}
-
-/* ANIMACIÓN FONDO */
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
 }
 
 /* =======================
-   HEADER
+   HEADER INSTITUCIONAL
 ======================= */
 .header {
-  background: linear-gradient(135deg, #0f5132, #198754);
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  background: #0f3d2e; /* verde institucional serio */
+  color: white;
+  padding: 22px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 4px solid #16a34a;
 }
 
 .header h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .header p {
-  opacity: 0.8;
-  margin-top: 5px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-top: 4px;
 }
 
 /* =======================
    LAYOUT PRINCIPAL
 ======================= */
 .main {
-  display: flex;
-  min-height: calc(100vh - 120px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 80px);
 }
 
 /* =======================
-   PANEL INFO
+   PANEL INFORMACIÓN
 ======================= */
 .info {
-  flex: 1;
+  background: #ffffff;
   padding: 50px;
-  background: rgba(17, 24, 39, 0.95);
-  backdrop-filter: blur(8px);
+  border-right: 1px solid #e5e7eb;
 }
 
 .info h2 {
-  color: #22c55e;
-  margin-bottom: 20px;
+  color: #0f3d2e;
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  border-left: 4px solid #16a34a;
+  padding-left: 10px;
+}
+
+.info p {
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
 
 .info ul {
-  list-style: none;
+  margin-top: 20px;
 }
 
 .info li {
-  margin: 12px 0;
-  opacity: 0.9;
+  list-style: none;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #374151;
 }
 
 /* =======================
    FORMULARIO
 ======================= */
 .form {
-  flex: 1;
+  background: #f9fafb;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: white;
-  color: #111;
+  justify-content: center;
   padding: 40px;
 }
 
 .form-card {
   width: 100%;
   max-width: 420px;
-  animation: fadeInUp 0.8s ease;
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 30px;
 }
 
 .form-card h2 {
   text-align: center;
+  font-size: 1.3rem;
   margin-bottom: 20px;
-  color: #0f172a;
-}
-
-/* FORM */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-input, select {
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  outline: none;
-  transition: 0.3s;
-}
-
-input:focus, select:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
-}
-
-/* BOTÓN */
-button {
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #22c55e;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  color: #0f3d2e;
 }
 
 /* =======================
-   ANIMACIONES
+   FORMULARIO INPUTS
 ======================= */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+input, select {
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+  background: white;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22,163,74,0.15);
+}
+
+/* =======================
+   BOTÓN INSTITUCIONAL
+======================= */
+button {
+  padding: 12px;
+  background: #0f3d2e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: #14532d;
 }
 
 /* =======================
@@ -158,63 +155,58 @@ button:hover {
 ======================= */
 @media (max-width: 768px) {
   .main {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
-  .info, .form {
-    padding: 30px;
+  .info {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
   }
 }
 
 /* =======================
-   ÉXITO (CHECK ANIMATION)
+   MENSAJE DE ÉXITO (SOBRIO)
 ======================= */
 .success-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(17,24,39,0.6);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 999;
+  justify-content: center;
 }
 
 .success-box {
-  background: #111827;
-  padding: 40px;
-  border-radius: 16px;
+  background: white;
+  padding: 30px;
+  border-radius: 6px;
   text-align: center;
-  animation: pop 0.4s ease;
+  border-top: 4px solid #16a34a;
 }
 
-@keyframes pop {
-  from {
-    transform: scale(0.7);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.success-box h3 {
+  color: #0f3d2e;
+  margin-top: 10px;
 }
 
+/* check simple institucional */
 .checkmark {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
+  border: 3px solid #16a34a;
   border-radius: 50%;
-  border: 4px solid #22c55e;
-  margin: 0 auto 20px;
+  margin: 0 auto;
   position: relative;
 }
 
 .checkmark::after {
   content: "";
   position: absolute;
-  left: 22px;
-  top: 18px;
-  width: 25px;
-  height: 40px;
-  border-right: 4px solid #22c55e;
-  border-bottom: 4px solid #22c55e;
+  left: 18px;
+  top: 14px;
+  width: 20px;
+  height: 30px;
+  border-right: 3px solid #16a34a;
+  border-bottom: 3px solid #16a34a;
   transform: rotate(45deg);
 }
