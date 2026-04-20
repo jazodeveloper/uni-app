@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import './src/unis.css';
-import { useState } from 'react';
+import './unis.css';
+import { supabase } from './supabase';
 
 function Unis() {
 
@@ -13,6 +13,21 @@ function Unis() {
   });
 
   const [otraEscuela, setOtraEscuela] = useState('');
+  const [escuelas, setEscuelas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost/unis-app/obtener_escuelas.php")
+      .then(res => res.json())
+      .then(data => setEscuelas(data))
+      .catch(err => console.error(err));
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +36,7 @@ function Unis() {
       formData.escuela === "otra" ? otraEscuela : formData.escuela;
 
     try {
-      const res = await fetch("/api/guardar", {
+      await fetch("http://localhost/unis-app/guardar.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -32,11 +47,7 @@ function Unis() {
         })
       });
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error);
-
-      alert("Registro guardado 🚀");
+      alert("Registro enviado correctamente");
 
       setFormData({
         nombre: '',
@@ -50,52 +61,39 @@ function Unis() {
 
     } catch (error) {
       console.error(error);
-      alert("Error al guardar ❌");
     }
-  };
-
-  const [escuelas, setEscuelas] = useState([]);
-  useEffect(() => {
-  const cargarEscuelas = async () => {
-    try {
-      const res = await fetch("/api/escuelas");
-      const data = await res.json();
-      setEscuelas(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  cargarEscuelas();
-}, []);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
   };
 
   return (
     <div className="page">
 
+      {/* 🔝 HEADER */}
       <header className="header">
         <h1>UTZAC</h1>
         <p>Universidad Tecnológica de Zacatecas</p>
       </header>
 
+      {/* 🧱 CONTENIDO */}
       <div className="main-container">
 
+        {/* 📚 PANEL IZQUIERDO */}
         <div className="info-panel">
           <h2>¿Por qué elegir UTZAC?</h2>
+
           <ul>
             <li>✔ Programas académicos actualizados</li>
             <li>✔ Enfoque práctico y tecnológico</li>
             <li>✔ Vinculación con empresas</li>
             <li>✔ Instalaciones modernas</li>
           </ul>
+
+          <p className="extra">
+            Forma parte de una universidad enfocada en el desarrollo profesional
+            y tecnológico de sus estudiantes.
+          </p>
         </div>
 
+        {/* 📝 FORMULARIO */}
         <div className="form-card">
           <h2>Registro de Aspirantes</h2>
 
@@ -145,25 +143,24 @@ function Unis() {
               required
             />
 
-            {/* 🔥 SELECT SIMPLE (temporal) */}
             <select
-  name="escuela"
-  value={formData.escuela}
-  onChange={handleChange}
-  required
->
-  <option value="">Escuela de procedencia</option>
+              name="escuela"
+              value={formData.escuela}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Escuela de procedencia</option>
 
-  {escuelas.map((escuela) => (
-    <option key={escuela.id} value={escuela.nombre}>
-      {escuela.nombre}
-    </option>
-  ))}
+              {escuelas.map((escuela) => (
+                <option key={escuela.id} value={escuela.nombre}>
+                  {escuela.nombre}
+                </option>
+              ))}
 
-  <option value="Otra">Otra</option>
-</select>
+              <option value="otra">Otra</option>
+            </select>
 
-            {formData.escuela === "Otra" && (
+            {formData.escuela === "otra" && (
               <input
                 type="text"
                 placeholder="Escribe tu escuela"
