@@ -29,18 +29,26 @@ function Unis() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const escuelaFinal =
-      formData.escuela === "Otra" ? otraEscuela : formData.escuela;
+  const escuelaFinal =
+    formData.escuela === "Otra" ? otraEscuela : formData.escuela;
 
-    await fetch('/api/guardar', {
+  try {
+    const res = await fetch('/api/guardar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...formData, escuela: escuelaFinal })
     });
 
-    alert('Registro enviado 🚀');
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Error al guardar ❌");
+      return;
+    }
+
+    alert("Registro guardado 🚀");
 
     setFormData({
       nombre: '',
@@ -51,7 +59,12 @@ function Unis() {
     });
 
     setOtraEscuela('');
-  };
+
+  } catch (error) {
+    alert("Error de conexión ❌");
+  }
+};
+
 
   return (
     <div>
@@ -86,9 +99,13 @@ function Unis() {
 
               <select name="carrera" value={formData.carrera} onChange={handleChange} required>
                 <option value="">Carrera</option>
-                <option value="TI">Tecnologías de la Información</option>
-                <option value="Mecatronica">Mecatrónica</option>
-                <option value="Logistica">Logística</option>
+              <option value="TI">Tecnologías de la Información</option>
+              <option value="Mecatronica">Mecatrónica</option>
+              <option value="Mantenimiento">Mantenimiento Industrial</option>
+              <option value="Renovables">Energías Renovables</option>
+              <option value="Logistica">Logística</option>
+              <option value="Procesos">Procesos Industriales</option>
+              <option value="Negocios">Desarrollo de Negocios</option>
               </select>
 
               <input name="telefono" placeholder="Teléfono" value={formData.telefono} onChange={handleChange} required />
