@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './unis.css';
-import { supabase } from './supabase';
 
 function Unis() {
 
@@ -13,21 +12,6 @@ function Unis() {
   });
 
   const [otraEscuela, setOtraEscuela] = useState('');
-  const [escuelas, setEscuelas] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost/unis-app/obtener_escuelas.php")
-      .then(res => res.json())
-      .then(data => setEscuelas(data))
-      .catch(err => console.error(err));
-  }, []);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +20,7 @@ function Unis() {
       formData.escuela === "otra" ? otraEscuela : formData.escuela;
 
     try {
-      await fetch("http://localhost/unis-app/guardar.php", {
+      const res = await fetch("/api/guardar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -47,7 +31,11 @@ function Unis() {
         })
       });
 
-      alert("Registro enviado correctamente");
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error);
+
+      alert("Registro guardado 🚀");
 
       setFormData({
         nombre: '',
@@ -61,39 +49,37 @@ function Unis() {
 
     } catch (error) {
       console.error(error);
+      alert("Error al guardar ❌");
     }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
     <div className="page">
 
-      {/* 🔝 HEADER */}
       <header className="header">
         <h1>UTZAC</h1>
         <p>Universidad Tecnológica de Zacatecas</p>
       </header>
 
-      {/* 🧱 CONTENIDO */}
       <div className="main-container">
 
-        {/* 📚 PANEL IZQUIERDO */}
         <div className="info-panel">
           <h2>¿Por qué elegir UTZAC?</h2>
-
           <ul>
             <li>✔ Programas académicos actualizados</li>
             <li>✔ Enfoque práctico y tecnológico</li>
             <li>✔ Vinculación con empresas</li>
             <li>✔ Instalaciones modernas</li>
           </ul>
-
-          <p className="extra">
-            Forma parte de una universidad enfocada en el desarrollo profesional
-            y tecnológico de sus estudiantes.
-          </p>
         </div>
 
-        {/* 📝 FORMULARIO */}
         <div className="form-card">
           <h2>Registro de Aspirantes</h2>
 
@@ -143,6 +129,7 @@ function Unis() {
               required
             />
 
+            {/* 🔥 SELECT SIMPLE (temporal) */}
             <select
               name="escuela"
               value={formData.escuela}
@@ -150,17 +137,14 @@ function Unis() {
               required
             >
               <option value="">Escuela de procedencia</option>
-
-              {escuelas.map((escuela) => (
-                <option key={escuela.id} value={escuela.nombre}>
-                  {escuela.nombre}
-                </option>
-              ))}
-
-              <option value="otra">Otra</option>
+              <option value="CBTIS 1">CBTIS 1</option>
+              <option value="CBTIS 23">CBTIS 23</option>
+              <option value="CONALEP">CONALEP</option>
+              <option value="Prepa 1">Prepa 1</option>
+              <option value="Otra">Otra</option>
             </select>
 
-            {formData.escuela === "otra" && (
+            {formData.escuela === "Otra" && (
               <input
                 type="text"
                 placeholder="Escribe tu escuela"
