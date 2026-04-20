@@ -3,6 +3,8 @@ import './unis.css';
 
 function Unis() {
 
+  const [success, setSuccess] = useState(false);
+
   const [formData, setFormData] = useState({
     nombre: '',
     carrera: '',
@@ -43,22 +45,28 @@ function Unis() {
 
     const data = await res.json();
 
-    if (!res.ok) {
-      alert(data.error || "Error al guardar ❌");
-      return;
-    }
+   if (!res.ok) {
+  alert(data.error || "Error al guardar ❌");
+  return;
+}
 
-    alert("Registro guardado 🚀");
+// 🔥 ACTIVAR ANIMACIÓN
+setSuccess(true);
 
-    setFormData({
-      nombre: '',
-      carrera: '',
-      telefono: '',
-      correo: '',
-      escuela: ''
-    });
+setTimeout(() => {
+  setSuccess(false);
+}, 2500);
 
-    setOtraEscuela('');
+// limpiar form
+setFormData({
+  nombre: '',
+  carrera: '',
+  telefono: '',
+  correo: '',
+  escuela: ''
+});
+
+setOtraEscuela('');
 
   } catch (error) {
     alert("Error de conexión ❌");
@@ -133,6 +141,18 @@ function Unis() {
               <button>Enviar registro</button>
 
             </form>
+            {success && (
+  <div className="success-overlay">
+    <div className="success-box">
+
+      <div className="checkmark"></div>
+
+      <h3>Registro enviado</h3>
+      <p>Tu información fue guardada correctamente</p>
+
+    </div>
+  </div>
+)}
 
           </div>
         </div>
