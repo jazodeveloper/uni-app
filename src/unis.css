@@ -1,108 +1,147 @@
-body {
-  background: linear-gradient(-45deg, #0f172a, #111827, #064e3b, #022c22);
-  background-size: 400% 400%;
-  animation: gradientBG 10s ease infinite;
-    margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0f172a;
+/* =======================
+   GLOBAL
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+  color: white;
+
+  /* Fondo animado tipo UTZAC moderno */
+  background: linear-gradient(-45deg, #0f172a, #111827, #064e3b, #022c22);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+}
+
+/* ANIMACIÓN FONDO */
 @keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* HEADER */
+/* =======================
+   HEADER
+======================= */
 .header {
   background: linear-gradient(135deg, #0f5132, #198754);
-  color: white;
   padding: 30px;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 .header h1 {
-  margin: 0;
   font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .header p {
-  margin-top: 5px;
   opacity: 0.8;
+  margin-top: 5px;
 }
 
-/* LAYOUT */
+/* =======================
+   LAYOUT PRINCIPAL
+======================= */
 .main {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
 }
 
-/* INFO PANEL */
+/* =======================
+   PANEL INFO
+======================= */
 .info {
   flex: 1;
-  padding: 40px;
-  background: #111827;
-  color: white;
+  padding: 50px;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(8px);
 }
 
 .info h2 {
   color: #22c55e;
+  margin-bottom: 20px;
 }
 
 .info ul {
   list-style: none;
-  padding: 0;
 }
 
 .info li {
-  margin: 10px 0;
+  margin: 12px 0;
+  opacity: 0.9;
 }
 
-/* FORM */
+/* =======================
+   FORMULARIO
+======================= */
 .form {
   flex: 1;
-  background: white;
-  padding: 40px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background: white;
+  color: #111;
+  padding: 40px;
 }
 
 .form-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  animation: fadeInUp 0.8s ease;
 }
 
 .form-card h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #0f172a;
 }
 
+/* FORM */
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 input, select {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.3s;
 }
 
+input:focus, select:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+}
+
+/* BOTÓN */
 button {
-  transition: all 0.3s ease;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #22c55e;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
-.form-card {
-  animation: fadeInUp 0.8s ease;
-}
-
+/* =======================
+   ANIMACIONES
+======================= */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -114,20 +153,26 @@ button:hover {
   }
 }
 
-/* RESPONSIVE */
-@media(max-width: 768px) {
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width: 768px) {
   .main {
     flex-direction: column;
   }
+
+  .info, .form {
+    padding: 30px;
+  }
 }
 
+/* =======================
+   ÉXITO (CHECK ANIMATION)
+======================= */
 .success-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
+  inset: 0;
+  background: rgba(0,0,0,0.65);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,7 +184,6 @@ button:hover {
   padding: 40px;
   border-radius: 16px;
   text-align: center;
-  color: white;
   animation: pop 0.4s ease;
 }
 
@@ -159,40 +203,18 @@ button:hover {
   height: 80px;
   border-radius: 50%;
   border: 4px solid #22c55e;
-  position: relative;
   margin: 0 auto 20px;
-  animation: scaleIn 0.3s ease;
+  position: relative;
 }
 
 .checkmark::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 22px;
-  top: 40px;
-  width: 20px;
+  top: 18px;
+  width: 25px;
   height: 40px;
   border-right: 4px solid #22c55e;
   border-bottom: 4px solid #22c55e;
   transform: rotate(45deg);
-  animation: drawCheck 0.5s ease forwards;
-}
-
-@keyframes drawCheck {
-  from {
-    height: 0;
-    width: 0;
-  }
-  to {
-    height: 40px;
-    width: 20px;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
 }
