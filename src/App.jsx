@@ -1,7 +1,7 @@
 import Unis from './unis';
 
 function App() {
-  return <unis />;
+  return <Unis />;
 }
 
 export default App;
