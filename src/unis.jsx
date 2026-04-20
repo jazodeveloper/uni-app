@@ -17,7 +17,8 @@ function Unis() {
   useEffect(() => {
     fetch('/api/escuelas')
       .then(res => res.json())
-      .then(data => setEscuelas(data));
+      .then(data => setEscuelas(data))
+      .catch(err => console.error(err));
   }, []);
 
   const handleChange = (e) => {
@@ -53,47 +54,73 @@ function Unis() {
   };
 
   return (
-    <div className="container">
+    <div>
 
-      <h1>UTZAC</h1>
-      <p>Registro de aspirantes</p>
+      <div className="header">
+        <h1>UTZAC</h1>
+        <p>Universidad Tecnológica de Zacatecas</p>
+      </div>
 
-      <form onSubmit={handleSubmit}>
+      <div className="main">
 
-        <input name="nombre" placeholder="Nombre" value={formData.nombre} onChange={handleChange} required />
+        {/* INFO */}
+        <div className="info">
+          <h2>¿Por qué elegir UTZAC?</h2>
+          <ul>
+            <li>✔ Educación tecnológica de calidad</li>
+            <li>✔ Vinculación directa con empresas</li>
+            <li>✔ Carreras con alta demanda laboral</li>
+            <li>✔ Instalaciones modernas</li>
+          </ul>
+        </div>
 
-        <select name="carrera" value={formData.carrera} onChange={handleChange} required>
-          <option value="">Carrera</option>
-          <option value="TI">TI</option>
-          <option value="Mecatronica">Mecatrónica</option>
-          <option value="Logistica">Logística</option>
-        </select>
+        {/* FORM */}
+        <div className="form">
+          <div className="form-card">
 
-        <input name="telefono" placeholder="Teléfono" value={formData.telefono} onChange={handleChange} required />
-        <input name="correo" placeholder="Correo" value={formData.correo} onChange={handleChange} required />
+            <h2>Registro de Aspirantes</h2>
 
-        <select name="escuela" value={formData.escuela} onChange={handleChange} required>
-          <option value="">Escuela</option>
+            <form onSubmit={handleSubmit}>
 
-          {escuelas.map(e => (
-            <option key={e.id} value={e.nombre}>{e.nombre}</option>
-          ))}
+              <input name="nombre" placeholder="Nombre completo" value={formData.nombre} onChange={handleChange} required />
 
-          <option value="Otra">Otra</option>
-        </select>
+              <select name="carrera" value={formData.carrera} onChange={handleChange} required>
+                <option value="">Carrera</option>
+                <option value="TI">Tecnologías de la Información</option>
+                <option value="Mecatronica">Mecatrónica</option>
+                <option value="Logistica">Logística</option>
+              </select>
 
-        {formData.escuela === "Otra" && (
-          <input
-            placeholder="Escribe tu escuela"
-            value={otraEscuela}
-            onChange={(e) => setOtraEscuela(e.target.value)}
-            required
-          />
-        )}
+              <input name="telefono" placeholder="Teléfono" value={formData.telefono} onChange={handleChange} required />
+              <input name="correo" placeholder="Correo electrónico" value={formData.correo} onChange={handleChange} required />
 
-        <button>Enviar</button>
+              <select name="escuela" value={formData.escuela} onChange={handleChange} required>
+                <option value="">Escuela de procedencia</option>
 
-      </form>
+                {escuelas.map(e => (
+                  <option key={e.id} value={e.nombre}>{e.nombre}</option>
+                ))}
+
+                <option value="Otra">Otra</option>
+              </select>
+
+              {formData.escuela === "Otra" && (
+                <input
+                  placeholder="Escribe tu escuela"
+                  value={otraEscuela}
+                  onChange={(e) => setOtraEscuela(e.target.value)}
+                  required
+                />
+              )}
+
+              <button>Enviar registro</button>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }
